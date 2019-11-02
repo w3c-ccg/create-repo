@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Run from this script's parent dir
+# Run from this repo's parent dir
 # 
-SCRIPT_HOME=../create-repo/
+SCRIPT_HOME=../create-repo
 
 REPO_NAME=$1;shift
 OWNERS="@$1";shift
@@ -17,9 +17,10 @@ echo "Owners: ${OWNERS}"
 git clone https://github.com/w3c-ccg/$REPO_NAME.git
 cd $REPO_NAME
 
+
 # Create gh-pages branch
 git checkout --orphan gh-pages
-git rm -rf .
+#git rm -rf .
 # Add default files
 cp $SCRIPT_HOME/CODEOWNERS .
 cp $SCRIPT_HOME/CONTRIBUTING.md .
@@ -29,7 +30,7 @@ cp $SCRIPT_HOME/README.md .
 sed -i '' -e "s/THE_OWNERS/${OWNERS}/g" CODEOWNERS
 sed -i '' -e "s/REPO_NAME/${REPO_NAME}/g" README.md
 
-echo "My Page" > index.html
+echo "${REPO_NAME}" > index.html
 git add index.html
 
 # Make sure we want to continue

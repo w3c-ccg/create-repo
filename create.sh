@@ -30,6 +30,9 @@ cp $SCRIPT_HOME/README.md .
 sed -i '' -e "s/THE_OWNERS/${OWNERS}/g" CODEOWNERS
 sed -i '' -e "s/REPO_NAME/${REPO_NAME}/g" README.md
 
+git add CODEOWNERS
+git add *.md
+
 echo "${REPO_NAME}" > index.html
 git add index.html
 

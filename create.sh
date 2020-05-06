@@ -2,6 +2,12 @@
 #
 # Run from this repo's parent dir
 # 
+# Command:
+#    ./create-repo/create.sh <REPO_NAME> <BRANCH> <OWNER1 OWNER2 ...>
+#
+# Example: 
+#    ./create-repo/create.sh functional-identity gh-pages jandrieu ChristopherA
+# 
 SCRIPT_HOME=../create-repo
 
 REPO_NAME=$1;shift

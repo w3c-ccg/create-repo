@@ -5,6 +5,7 @@
 SCRIPT_HOME=../create-repo
 
 REPO_NAME=$1;shift
+BRANCH=$1;shift
 OWNERS="@$1";shift
 for arg in "$@"
 do
@@ -12,14 +13,18 @@ do
 done
 
 echo "Repo name: ${REPO_NAME}"
+echo "Branch: ${BRANCH}"
 echo "Owners: ${OWNERS}"
 
 git clone https://github.com/w3c-ccg/$REPO_NAME.git
 cd $REPO_NAME
 
+if [ "$BRANCH" == "gh-pages" ]
+then
+   # Create gh-pages branch
+   git checkout --orphan gh-pages
+fi
 
-# Create gh-pages branch
-git checkout --orphan gh-pages
 #git rm -rf .
 # Add default files
 cp $SCRIPT_HOME/CODEOWNERS .
@@ -33,9 +38,6 @@ sed -i '' -e "s/REPO_NAME/${REPO_NAME}/g" README.md
 git add CODEOWNERS
 git add *.md
 
-echo "${REPO_NAME}" > index.html
-git add index.html
-
 # Make sure we want to continue
 read -r -p "Check for problems, press 'y' when ready to proceed: " PROCEED
 
@@ -48,6 +50,4 @@ then
 fi
 
 git commit -a -m "First pages commit"
-git push --set-upstream origin gh-pages
-
-
+git push --set-upstream origin "$BRANCH"

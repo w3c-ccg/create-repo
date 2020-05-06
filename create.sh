@@ -3,15 +3,14 @@
 # Run from this repo's parent dir
 # 
 # Command:
-#    ./create-repo/create.sh <REPO_NAME> <BRANCH> <OWNER1 OWNER2 ...>
+#    ./create-repo/create.sh <REPO_NAME> <OWNER1 OWNER2 ...>
 #
 # Example: 
-#    ./create-repo/create.sh functional-identity gh-pages jandrieu ChristopherA
+#    ./create-repo/create.sh functional-identity jandrieu ChristopherA
 # 
 SCRIPT_HOME=../create-repo
 
 REPO_NAME=$1;shift
-BRANCH=$1;shift
 OWNERS="@$1";shift
 for arg in "$@"
 do
@@ -19,17 +18,10 @@ do
 done
 
 echo "Repo name: ${REPO_NAME}"
-echo "Branch: ${BRANCH}"
 echo "Owners: ${OWNERS}"
 
 git clone https://github.com/w3c-ccg/$REPO_NAME.git
 cd $REPO_NAME
-
-if [ "$BRANCH" == "gh-pages" ]
-then
-   # Create gh-pages branch
-   git checkout --orphan gh-pages
-fi
 
 #git rm -rf .
 # Add default files
@@ -56,4 +48,4 @@ then
 fi
 
 git commit -a -m "First pages commit"
-git push --set-upstream origin "$BRANCH"
+git push --set-upstream origin master

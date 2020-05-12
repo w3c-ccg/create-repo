@@ -20,15 +20,20 @@ done
 echo "Repo name: ${REPO_NAME}"
 echo "Owners: ${OWNERS}"
 
-git clone https://github.com/w3c-ccg/$REPO_NAME.git
+git clone git@github.com:w3c-ccg/$REPO_NAME.git
 cd $REPO_NAME
+
+git checkout -b boilerplate
 
 #git rm -rf .
 # Add default files
 cp $SCRIPT_HOME/CODEOWNERS .
 cp $SCRIPT_HOME/CONTRIBUTING.md .
 cp $SCRIPT_HOME/LICENSE.md .
-cp $SCRIPT_HOME/README.md .
+
+if [ ! -f ./README.md ]; then
+    cp $SCRIPT_HOME/README.md .
+fi
 
 sed -i '' -e "s/THE_OWNERS/${OWNERS}/g" CODEOWNERS
 sed -i '' -e "s/REPO_NAME/${REPO_NAME}/g" README.md
@@ -47,5 +52,5 @@ then
    exit
 fi
 
-git commit -a -m "First pages commit"
-git push --set-upstream origin master
+git commit -a -m "CCG boilerplate files"
+git push origin boilerplate
